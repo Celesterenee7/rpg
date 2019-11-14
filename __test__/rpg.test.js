@@ -1,5 +1,6 @@
 import { House } from './../src/js/house.js';
 import { Game } from './../src/js/game.js';
+import { Battle } from './../src/js/battle.js';
 
 describe('House', () => {
 
@@ -87,4 +88,37 @@ describe ('Game', () => {
     expect(newGame.winner.land >= 95).toEqual(true);
   });
 
+});
+
+describe ('Battle', () => {
+
+  let newGame;
+  let newHouse1;
+  let newHouse2;
+  let newHouse3;
+  let newHouse4;
+  let newHouse5;
+
+  beforeEach(() => {
+    newGame = new Game();
+    newHouse1 = new House("Lannister", "Circe");
+    newHouse2 = new House("Stark", "Jphn Snow");
+    newHouse3 = new House("Tyrell", "Margrie");
+    newHouse4 = new House("Greyjoy", "Theon");
+    newHouse5 = new House("Targgaryen", "Khalessi");
+    newGame.addHouse(newHouse1);
+    newGame.addHouse(newHouse2);
+    newGame.addHouse(newHouse3);
+    newGame.addHouse(newHouse4);
+    newGame.addHouse(newHouse5);
+    newGame.calculateStartingLand();
+  });
+
+  test('Should create a battle object with names for each house, land at play, and number of players for each side', () => {
+    const newBattle = new Battle([newHouse1,newHouse2], .5);
+    expect(newBattle.firstHouse).toEqual("Lannister");
+    expect(newBattle.secondHouse).toEqual("Stark");
+    expect(newBattle.landAtPlay).toEqual([10,10]);
+    expect(newBattle.armies).toEqual([50,50]);
+  });
 });
