@@ -88,6 +88,13 @@ describe ('Game', () => {
     expect(newGame.winner.land >= 95).toEqual(true);
   });
 
+  test('should increment turn', () => {
+    newGame.changeTurn();
+    expect(newGame.houseTurn).toEqual(1);
+  });
+
+
+
 });
 
 describe ('Battle', () => {
@@ -116,9 +123,14 @@ describe ('Battle', () => {
 
   test('Should create a battle object with names for each house, land at play, and number of players for each side', () => {
     const newBattle = new Battle([newHouse1,newHouse2], .5);
-    expect(newBattle.firstHouse).toEqual("Lannister");
-    expect(newBattle.secondHouse).toEqual("Stark");
+    expect(newBattle.houseArray).toEqual([newHouse1,newHouse2]);
     expect(newBattle.landAtPlay).toEqual([10,10]);
     expect(newBattle.armies).toEqual([50,50]);
+  });
+
+  test('should declare a winner', () => {
+    const newBattle = new Battle([newHouse1,newHouse2], .5);
+    expect(newBattle.getWinner()).toBeTruthy();
+    console.log(newHouse1);
   });
 });

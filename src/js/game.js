@@ -4,6 +4,7 @@ export class Game {
     this.isOver = false;
     this.isReady= false;
     this.houseCount = 0;
+    this.houseTurn = 0;
   }
 
   addHouse(house) {
@@ -38,6 +39,26 @@ export class Game {
     return this.isOver;
   }
 
+  changeTurn() {
+    this.houseTurn++;
+    if (this.houseTurn === this.houses.length) this.houseTurn = 0;
+  }
+
+  takeTurn(chooseBattle, battleArray, percentage) {
+    if (chooseBattle) {
+      const newBattle = new Battle(battleArray, percentage);
+      const battleResults = newBattle.getWinner();
+      battleResults.forEach(house => {
+        if (house.army < 1) {
+          console.log(`${house.name} is DEAD!!!!`);
+        }
+      });
+      this.changeTurn();
+    } else {
+      this.changeTurn();
+    }
+    this.checkForWinner();
+  }
 
 
 }
